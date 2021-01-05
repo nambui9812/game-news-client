@@ -1,4 +1,4 @@
-import Head from 'next/head'
+import Head from 'next/head';
 
 export default function Home() {
 	return (
@@ -6,6 +6,9 @@ export default function Home() {
 			<Head>
 				<title>Game News</title>
 			</Head>
+			<div className="Home">
+				<h1>Hello world</h1>
+			</div>
 		</div>
 	)
 }
