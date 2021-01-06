@@ -5,6 +5,9 @@ import Cookies from 'cookies';
 const API_URL = "http://localhost:5000";
 const proxy = httpProxy.createProxyServer();
 
+// Need to disable bodyParser of the proxy
+// otherwise the api will not be able to get the body request
+// from the proxy
 export const config = {
     api: {
         bodyParser: false
