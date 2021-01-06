@@ -2,12 +2,29 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import axios from 'axios';
 
 import style from '../../styles/form.module.scss';
 
 const Login = () => {
-    const onFinish = (values) => {
-        console.log('Success:', values);
+    const onFinish = async (values) => {
+        try {
+            const response = await axios.post(
+                '/api/v1/users/login',
+                JSON.stringify({
+                    username: values.username,
+                    password: values.password
+                }),
+                {
+                    headers: { 'content-type': 'application/json' }
+                }
+            );
+
+            console.log(response);
+        }
+        catch(err) {
+            console.log(err.response.data);
+        }
     };
 
 	return (
