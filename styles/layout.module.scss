@@ -1,0 +1,27 @@
+.layout {
+    min-height: 100vh;
+}
+
+.navbar {
+    background-color: rgb(221, 163, 54);
+    color: black;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 10%;
+    padding-right: 10%;
+    font-weight: bold;
+}
+
+.link {
+    color: black !important;
+    margin-left: 15px;
+}
+
+.content {
+    padding: 20px 10%;
+    min-height: 85vh;
+}
+
+.footer {
+    text-align: center;
+}

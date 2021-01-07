@@ -1,14 +1,32 @@
 import Head from 'next/head';
+import Cookies from 'cookies';
 
-export default function Home() {
+import MyLayout from '../components/MyLayout';
+
+const Home = ({ auth }) => {
 	return (
-		<div>
+		<MyLayout auth={auth}>
 			<Head>
 				<title>Game News</title>
 			</Head>
 			<div className="Home">
-				<h1>Hello world</h1>
+				Home page
 			</div>
-		</div>
+		</MyLayout>
 	)
-}
+};
+
+export async function getServerSideProps({ req, res }) {
+    const cookies = new Cookies(req, res);
+    const authToken = cookies.get('auth-token');
+
+    if (authToken) {
+        return {
+            props: { auth: true }
+        }
+    }
+  
+    return { props: { auth: false } };
+};
+
+export default Home;

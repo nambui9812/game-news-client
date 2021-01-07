@@ -1,10 +1,12 @@
 import Head from 'next/head';
 import Link from 'next/link';
+import Cookies from 'cookies';
 import { Form, Input, Button } from 'antd';
 
+import MyLayout from '../../components/MyLayout';
 import style from '../../styles/form.module.scss';
 
-const Register = () => {
+const Register = ({ auth }) => {
     const onFinish = (values) => {
         console.log('Success:', values);
     };
@@ -28,7 +30,7 @@ const Register = () => {
     }
 
 	return (
-		<>
+		<MyLayout auth={auth}>
 			<Head>
 				<title>Game News | Register</title>
 			</Head>
@@ -101,8 +103,25 @@ const Register = () => {
                     </Form.Item>
                 </Form>
 			</div>
-		</>
+		</MyLayout>
 	);
+};
+
+export async function getServerSideProps({ req, res }) {
+    const cookies = new Cookies(req, res);
+    const authToken = cookies.get('auth-token');
+
+    if (authToken) {
+        return {
+            props: { auth: true },
+            redirect: {
+                destination: '/',
+                permanent: false
+            }
+        }
+    }
+  
+    return { props: { auth: false } };
 };
 
 export default Register;

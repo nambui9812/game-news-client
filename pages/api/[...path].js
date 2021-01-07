@@ -43,14 +43,16 @@ export default (req, res) => {
                     proxyRes.on('data', (chunk) => {
                         apiResponseBody += chunk;
                     });
-                    
+
                     // Once we've read the entire API response body, we're ready to handle it:
                     proxyRes.on('end', () => {
                         try {
+                            const jsonResponse = JSON.parse(apiResponseBody);
+
                             // Success
-                            if (apiResponseBody.data) {
+                            if (jsonResponse.data) {
                                 // Extract the authToken from API's response:
-                                const { message, data } = JSON.parse(apiResponseBody);
+                                const { message, data } = jsonResponse;
                                 const { user, token } = data;
 
                                 // Set the authToken as an HTTP-only cookie.

@@ -1,12 +1,14 @@
 import Head from 'next/head';
 import Link from 'next/link';
+import axios from 'axios';
+import Cookies from 'cookies';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import axios from 'axios';
 
+import MyLayout from '../../components/MyLayout';
 import style from '../../styles/form.module.scss';
 
-const Login = () => {
+const Login = ({ auth }) => {
     const onFinish = async (values) => {
         try {
             const response = await axios.post(
@@ -28,7 +30,7 @@ const Login = () => {
     };
 
 	return (
-		<>
+		<MyLayout auth={auth}>
 			<Head>
 				<title>Game News | Login</title>
 			</Head>
@@ -75,8 +77,25 @@ const Login = () => {
                     </Form.Item>
                 </Form>
 			</div>
-		</>
+		</MyLayout>
 	);
+};
+
+export async function getServerSideProps({ req, res }) {
+    const cookies = new Cookies(req, res);
+    const authToken = cookies.get('auth-token');
+
+    if (authToken) {
+        return {
+            props: { auth: true },
+            redirect: {
+                destination: '/',
+                permanent: false
+            }
+        }
+    }
+  
+    return { props: { auth: false } };
 };
 
 export default Login;
